@@ -4,9 +4,11 @@ const port = 8000;
 const db = require('./config/mongoose')
 const expressLayouts= require('express-ejs-layouts')
 
+//use for session cookie
 const session =require('express-session')
 const passport = require('passport')
 const passportLocal= require('./config/passport-local-strategy');
+
 const cookieParser = require('cookie-parser');
 
 
@@ -25,7 +27,7 @@ app.set('views', './views');
 
 app.use(session({
     name:'codial',
-    //to do ----> change before deployment
+    //to do ----> change seceret before deployment
     secret:'blahblah',
     saveUninitialized:false,
     resave:false,
@@ -36,6 +38,8 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(passport.setAuthenticatedUser)
+
 app.use('/',require('./routes'))
 
 
