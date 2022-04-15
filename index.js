@@ -10,12 +10,23 @@ const passport = require('passport')
 const passportLocal= require('./config/passport-local-strategy');
 
 const cookieParser = require('cookie-parser');
-
+const MongoStore = require('connect-mongo')
+const sassMiddleware=require('node-sass-middleware')
 
 // middlewares
-app.use(expressLayouts)
+
+
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}))
 
 app.use(express.urlencoded())
+app.use(express.static('./assets'))
+app.use(expressLayouts)
 //use our routes
 app.use(cookieParser())
 
@@ -25,6 +36,8 @@ app.use(cookieParser())
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+//mongostore is used to store the session cookie in the db
+
 app.use(session({
     name:'codial',
     //to do ----> change seceret before deployment
@@ -33,7 +46,16 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge: (1000*60*100)
-    }
+    },
+    store: MongoStore.create({
+            mongoUrl:'mongodb://localhost/codeial_development',        
+            // mongooseConnection:db,
+            autoRemove:'disabled'
+        },
+        function(err){
+            console.log(err ||'Connected to mongostore db');
+        }
+    )
 }))
 
 app.use(passport.initialize())

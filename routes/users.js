@@ -17,5 +17,5 @@ Router.post('/create-session',/*middleware*/ passport.authenticate(
     {failureRedirect:'/users/sign-in'}
 ),usersController.createSession)
 
-
+Router.get('/sign-out',usersController.destroySession)
 module.exports = Router

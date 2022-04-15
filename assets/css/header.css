@@ -1,0 +1,11 @@
+#header-main-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #008cff; }
+  #header-main-div .header-list {
+    list-style-type: none; }
+  #header-main-div ul li {
+    display: inline;
+    padding: 5px;
+    margin-right: 5px; }

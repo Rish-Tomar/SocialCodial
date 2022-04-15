@@ -1,12 +1,19 @@
 <html lang="en">
 <head>
     <title> <%= title %> </title>
+    <link rel="stylesheet" href="/css/layout.css">    <!-- we need not to write ../assets here it is taken care by middleware -->
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
 
+    <div id ="layout-header">
     <%- include('_header') %>
+    </div>
 
+    <main id="layout-main">
     <%- body %>
+    </main>
     
     <%- include('_footer') %> 
 
