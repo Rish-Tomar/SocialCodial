@@ -1,7 +1,10 @@
 <h1>
     codiel HOme page
 </h1>
+<link rel="stylesheet" href="/css/home.css">
 
+<div id="home-container">
+    
 <section id="feed-post">
     <h4>POST</h4>
     <form action="/posts/create" method="post" id="new-post-form">
@@ -9,17 +12,27 @@
                  name="content" 
                  id="post-content" 
                  cols="30" 
-                 rows="5"></textarea>
+                 rows="5"></textarea required>
         <input type="submit" value="Post">
     </form>
 
     <div id="posts-list">
         <ul>
             <% for (post of posts) { %>
-                <li> <%= post.content%></li>
+                <%- include('_post') -%>
             <% } %>
         </ul>
 
     </div>
 
 </section>
+
+<section id="user-friends">
+    <h4>Friends</h4>
+      <% for (u of all_users) {%>
+        <p>
+            <a href="/users/profile/<%=u.id%>"><%=u.name%></a>
+        </p>
+     <% }%>
+</section>
+</div>
