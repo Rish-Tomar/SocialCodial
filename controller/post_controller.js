@@ -1,29 +1,43 @@
 const Post = require('../model/post')
 const Comment= require('../model/comment')
-module.exports.create = function(req,res){
-    console.log(req.user)
-    Post.create({
+const { reset } = require('nodemon')
+
+module.exports.create = async function(req,res){
+    try{
+    await Post.create({
         content:req.body.content,
         user:req.user._id,
-    },function(err,post){
-        if(err){console.log('error in creating post'); return;}
-        
-        return res.redirect('back')
     })
+        req.flash('success','Post Published..')
+        return res.redirect('back')
+
+    }catch(err){
+        req.flash('error','Post not created..')
+        return res.redirect('back')       
+    }
 }
 
 
-module.exports.destroy = function(req,res){
-    Post.findById(req.params.id, function(err,post){
-        //.id means converting object to string format
-        if(post.user == req.user.id){
-            post.remove()
+module.exports.destroy = async function(req,res){
+   try{
+    let post=await Post.findById(req.params.id)
 
-            Comment.deleteMany({post:req.params.id}, function(err){
-                return res.redirect('back')
-            })
-        }else{
+    //.id means converting object to string format
+    if(post.user == req.user.id){
+        post.remove()
+
+        await Comment.deleteMany({post:req.params.id})
+
+        req.flash('success','Post and associated comments deleted')
             return res.redirect('back')
-        }
-    })
+
+    }else{
+        req.flash('error','Posts cannot be deleted')
+        return res.redirect('back')
+    }
+
+   }catch(err){
+       req.flash('error',err)
+       return res.redirect('back')
+   }
 }

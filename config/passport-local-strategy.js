@@ -1,3 +1,4 @@
+const req = require('express/lib/request');
 const passport = require('passport')
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -6,17 +7,20 @@ const User = require('../model/user')
 
 //authentication using passport
 passport.use(new LocalStrategy({
-    usernameField:'email'
+    usernameField:'email',
+    passReqToCallback:true
 },
-function(email,password,done){ //done is the inbuilt function
+function(req,email,password,done){ //done is the inbuilt function
      
     
     //finding user and establishing identity
      User.findOne({email:email},function(err,user){
          if(err){ console.log('error in finding'); 
+                  req.flash('error',err)
                   return done(err)
                 }
         if(!user || user.password !=password){
+            req.flash('error','Invalid Username/Password')
             console.log('Invalid User');
             return done(null,false); //  first argument is for error if any, null means no error second argument says 
                                      //  authentication not done         
