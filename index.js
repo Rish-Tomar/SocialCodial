@@ -7,8 +7,8 @@ const expressLayouts= require('express-ejs-layouts')
 //use for session cookie
 const session =require('express-session')
 const passport = require('passport')
-const passportLocal= require('./config/passport-local-strategy');
-
+const passportLocal= require('./config/passport-jwt-strategy');
+const passportJwt= require('./config/passport-local-strategy');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')
 const sassMiddleware=require('node-sass-middleware')
