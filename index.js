@@ -28,6 +28,8 @@ app.use(sassMiddleware({
 
 app.use(express.urlencoded())
 app.use(express.static('./assets'))
+//make uploads path available
+app.use('/users/profile/uploads',express.static(__dirname+'/uploads'))
 app.use(expressLayouts)
 //use our routes
 app.use(cookieParser())

@@ -1,6 +1,8 @@
 
 const { redirect } = require('express/lib/response')
 const User= require('../model/user')
+const fs = require('fs')
+const path = require('path')
 
 module.exports.profile= function(req,res){
 
@@ -10,17 +12,50 @@ module.exports.profile= function(req,res){
             profile_user:user
         })
     })
-    // return res.render('user_profile',{
-    //     title:'User Profile'
-    // })
 }
-module.exports.update = function(req,res){
+
+
+module.exports.update =  async function(req,res){
+   
     if(req.user.id==req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+
+        try{
+            //find user
+            let user=await User.findByIdAndUpdate(req.params.id)
+            //our body parser will ot be able to handle multipart form so we used muter defined function
+            User.uploadedAvatar(req,res,function(err){
+                if(err){console.log('multer error',err);}
+                console.log("file is",req.file); 
+    
+                user.name=req.body.name
+                user.email=req.body.email
+
+                if(req.file){
+
+                    //if user avatar already exist then delete previous and upload new one
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,"..",user.avatar))
+
+                    }
+
+                    
+                    user.avatar=User.avatarPath+"\\"+req.file.filename;
+                    console.log(user.avatar);
+                }
+                user.save()
+                return res.redirect('back')
+
+            })
+        } 
+        catch(err){
+            req.flash('error','error in try')
             return res.redirect('back')
-        })
+        }   
+    
     }else{
+        req.flash('error','Unauthorised')
         return res.status(401).send('Unauthorised')
+
     }
 }
 

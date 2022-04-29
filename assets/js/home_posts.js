@@ -14,7 +14,6 @@
                     let newPost=newPostDom(data.data.post)
                     $('#posts-list>ul').prepend(newPost)
                     deletePost($(' .delete-post-button',newPost)) //there is a space before delete-post
-                    // console.log(data)
                 },error: function(error){
                     console.log(error.responseText);
                 }
