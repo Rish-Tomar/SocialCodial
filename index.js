@@ -9,11 +9,14 @@ const session =require('express-session')
 const passport = require('passport')
 const passportLocal= require('./config/passport-jwt-strategy');
 const passportJwt= require('./config/passport-local-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy')
+
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')
 const sassMiddleware=require('node-sass-middleware')
 const flash = require('connect-flash')
-const customMware= require('./config/middleware')
+const customMware= require('./config/middleware');
+const { constants } = require('crypto');
 
 // middlewares
 

@@ -19,4 +19,10 @@ Router.post('/create-session',/*middleware*/ passport.authenticate(
 ),usersController.createSession)
 
 Router.get('/sign-out',usersController.destroySession)
+
+//google oauth 
+Router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}))
+Router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'users/sign-in'}),usersController.createSession)
+
+
 module.exports = Router
