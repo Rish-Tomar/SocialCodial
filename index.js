@@ -1,4 +1,8 @@
+//using .env file
+require('dotenv').config()
+
 const express = require('express')
+const env= require('./config/environment')
 const app= express()
 const port = 8000;
 const db = require('./config/mongoose')
@@ -6,6 +10,8 @@ const expressLayouts= require('express-ejs-layouts')
 
 //use for session cookie
 const session =require('express-session')
+
+//all passport related strategies
 const passport = require('passport')
 const passportLocal= require('./config/passport-jwt-strategy');
 const passportJwt= require('./config/passport-local-strategy');
@@ -17,20 +23,27 @@ const sassMiddleware=require('node-sass-middleware')
 const flash = require('connect-flash')
 const customMware= require('./config/middleware');
 const { constants } = require('crypto');
+const path=require('path')
+
+//setting up chat server
+// const chatServer = require('http').Server(app)
+// const chatSocket = require('./config/chat_sockets').chatSockets(chatServer)
+// chatServer.listen(5000);
+// console.log('chat server listining on port 5050')
 
 // middlewares
 
 
 app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
+    src: path.join(__dirname,env.asset_path,'scss'),
+    dest: path.join(__dirname,env.asset_path,'css'),
     debug: true,
     outputStyle: 'extended',
     prefix: '/css'
 }))
 
 app.use(express.urlencoded())
-app.use(express.static('./assets'))
+app.use(express.static(env.asset_path))
 //make uploads path available
 app.use('/users/profile/uploads',express.static(__dirname+'/uploads'))
 app.use(expressLayouts)
@@ -48,7 +61,7 @@ app.set('views', './views');
 app.use(session({
     name:'codial',
     //to do ----> change seceret before deployment
-    secret:'blahblah',
+    secret:env.session_cookie_key,
     saveUninitialized:false,
     resave:false,
     cookie:{
@@ -74,10 +87,10 @@ app.use('/',require('./routes'))
 
 
 
-app.listen(port,function(err){
+app.listen(process.env.PORT,function(err){
     if(err)
     {
         console.log("Error :",err);
     }
-    console.log('Server Is UP and running at port :',port)
+    console.log('Server Is UP and running at port :',process.env.PORT)
 })

@@ -1,5 +1,7 @@
 const Post = require('../model/post')
 const Comment= require('../model/comment')
+const Like= require('../model/like')
+
 const { reset } = require('nodemon')
 
 module.exports.create = async function(req,res){
@@ -32,6 +34,10 @@ module.exports.destroy = async function(req,res){
 
     //.id means converting object to string format
     if(post.user == req.user.id){
+
+        await Like.deleteMany({likable:post,onModel : 'Post'});
+        await Like.deleteMany({_id:{$in:post.comments}});
+        
         post.remove()
 
         await Comment.deleteMany({post:req.params.id})

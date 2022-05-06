@@ -10,8 +10,11 @@ let posts =await Post.find({})
     path:'comment',
     populate:{
         path:'user'
+    },
+    populate:{
+        path:'likes'
     }
-})
+}).populate('likes')
    
   let user=await User.find({})
 

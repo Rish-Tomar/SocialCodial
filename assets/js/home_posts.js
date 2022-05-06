@@ -35,6 +35,12 @@
                     <small>
                         ${post.user.name }
                     </small>
+
+                    <small>
+                        <a class="toggle-like-button" data-likes="${ post.likes.length }" href="/likes/toggle/?id=${post._id}&type=Post">
+                           ${post.likes.length} Likes
+            </a>
+                    </small>
                 </p>
             
                 <div class="posts-comments">

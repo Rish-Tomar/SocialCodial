@@ -9,5 +9,6 @@ Router.use('/posts',require('./posts'))
 Router.use('/comments',require('./comments'))
 
 Router.use('/api',require('./api'))
+Router.use('/likes',require('./likes'))
 
-module.exports=Router;
+module.exports=Router

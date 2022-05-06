@@ -1,24 +1,45 @@
 const { redirect } = require('express/lib/response')
 const Comment = require('../model/comment')
 const Post = require('../model/post')
+const commentsMailer=require('../mailers/comments-mailer')
+module.exports.create=async function(req,res){
+   try{
+     let post = await Post.findById(req.body.post) 
+     if(post){
+        let comment = await Comment.create({
+            content:req.body.content,
+            post:req.body.post,
+            user:req.user._id
+        })
+            
 
-module.exports.create=function(req,res){
-    Post.findById(req.body.post, function(err,post){
-        if(post){
-            Comment.create({
-                content:req.body.content,
-                post:req.body.post,
-                user:req.user._id
-            },function(err,comment){
-                //handle error
+            post.comment.push(comment)
+            post.save()
+            
+            comment = await comment.populate('user','name email')
+            commentsMailer.newComment(comment)
+           if(req.xhr){
 
-                post.comment.push(comment)
-                post.save()
+               
 
-                res.redirect('/')
-            })
-        }
-    })
+               return res.status(200).json({
+                   data:{
+                       comment:comment
+                   },
+                   message:'post created'
+               })
+           }
+        req.flash('success','Comment Published')
+        res.redirect('/')
+    
+      }
+
+   } catch(err){
+       if(err){
+           console.log("error in creating commetn ",err)
+       }
+
+   }
 
 }
 
