@@ -1,0 +1,16 @@
+[0mGET / [36m304[0m 102.973 ms - -[0m
+[0mGET /users/sign-out [36m302[0m 16.780 ms - 46[0m
+[0mGET / [32m200[0m 48.894 ms - 6654[0m
+[0mGET /users/sign-in [36m304[0m 9.418 ms - -[0m
+[0mGET /users/auth/google [36m302[0m 10.570 ms - 0[0m
+[0mGET /users/auth/google/callback?code=4%2F0AX4XfWiAzVYaYZv6U1_jLe8yjKsrscPhQ955RN0c3sJExawLkJwEahBxzieOeApt7d6kqQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=none [36m302[0m 490.941 ms - 46[0m
+[0mGET / [32m200[0m 39.999 ms - 10215[0m
+[0mGET / [32m200[0m 139.816 ms - 6335[0m
+[0mGET /css/footer.css [33m404[0m 15.681 ms - 153[0m
+[0mGET /css/layout.css [33m404[0m 21.123 ms - 153[0m
+[0mGET /css/chat_box.css [33m404[0m 33.782 ms - 155[0m
+[0mGET /css/header.css [33m404[0m 29.748 ms - 153[0m
+[0mGET /js/home_posts.js [33m404[0m 8.239 ms - 155[0m
+[0mGET /css/home.css [33m404[0m 8.159 ms - 151[0m
+[0mGET /js/toggle_likes.js [33m404[0m 9.450 ms - 157[0m
+[0mGET /css/home.css [33m404[0m 3.387 ms - 151[0m

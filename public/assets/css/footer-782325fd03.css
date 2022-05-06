@@ -1,0 +1,6 @@
+footer {
+  background-color: #757572; }
+  footer .footer-main-div {
+    display: flex; }
+    footer .footer-main-div div ul li {
+      list-style-type: none; }

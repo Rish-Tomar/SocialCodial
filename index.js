@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const express = require('express')
 const env= require('./config/environment')
+const morgan = require('morgan')
 const app= express()
 const port = 8000;
 const db = require('./config/mongoose')
@@ -33,14 +34,16 @@ const path=require('path')
 
 // middlewares
 
+if(env.name=='development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname,env.asset_path,'scss'),
+        dest: path.join(__dirname,env.asset_path,'css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }))
+}
 
-app.use(sassMiddleware({
-    src: path.join(__dirname,env.asset_path,'scss'),
-    dest: path.join(__dirname,env.asset_path,'css'),
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
-}))
 
 app.use(express.urlencoded())
 app.use(express.static(env.asset_path))
@@ -50,7 +53,7 @@ app.use(expressLayouts)
 //use our routes
 app.use(cookieParser())
 
-
+app.use(morgan(env.morgan.mode,env.morgan.Option))
 
 //set up the view engines
 app.set('view engine', 'ejs');
