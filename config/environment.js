@@ -14,7 +14,7 @@ const accessLogStream = rfs.createStream('access.log',{
 require('dotenv').config()
 const development = {
     name:'development',
-    asset_path:process.env.AssetsPath,
+    asset_path:'./assets',
     session_cookie_key:process.env.SessionCookie,
     db:process.env.DB,
     smtp:{
@@ -77,4 +77,4 @@ const production = {
 
 
 
-module.exports = development
+module.exports = eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);

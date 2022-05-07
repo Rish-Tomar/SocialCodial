@@ -1,7 +1,8 @@
+   
 <h1>
     codiel HOme page
 </h1>
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="<%= assetPath('css/home.css') %>">
 
 <div id="home-container">
     
@@ -38,9 +39,9 @@
 <%- include('_chat_box') -%>
 </div>
 
-<script src="/js/home_posts.js"></script>
+<script src="<%= assetPath('js/home_posts.js')   %>"></script>
 
-<script src="js/toggle_likes.js"></script>
+<script src="<%= assetPath('js/toggle_likes.js') %>"></script>
 <script>
     $('.toggle-like-button').each(function(){
         let self= this
@@ -52,7 +53,5 @@
 <% if (locals.user) { %>
 <script>
     new ChatEngine('user-chat-box','<%= locals.user._id %>')
-
 </script>
-
 <% } %> -->
