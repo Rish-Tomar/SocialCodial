@@ -4,7 +4,10 @@ require('dotenv').config()
 const express = require('express')
 const env= require('./config/environment')
 const morgan = require('morgan')
+
 const app= express()
+const kutta='DOG'   ///////////////
+// require('./config/view_helper')(app)
 const port = 8000;
 const db = require('./config/mongoose')
 const expressLayouts= require('express-ejs-layouts')
